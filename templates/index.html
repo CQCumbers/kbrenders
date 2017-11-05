@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html land="en">
+  <head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>kbrenders</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
+    <link rel="shortcut icon" href="static/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,800">
+    <link rel="stylesheet" href="static/style.css">
+  </head>
+
+  <body>
+    <!-- Flashed messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flashes">
+        {% for message in messages %}
+          <span>{{ message }}</span>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <h1 class="logo">kbrenders</h1>
+      <p class="slogan">$10 next-day 3D keycap set renders</p>
+      <a class="button" href="#orderform">Order a Render</a>
+      <img class="masthead-img" src="static/renders/mockup.png">
+    </div>
+
+    <div class="samples">
+      <h2>Sample Renders</h2>
+      {% for image in images %}
+      <img class="sample-img" src="static/renders/{{ image }}">
+      {% endfor %}
+    </div>
+
+    <div class="orderform">
+      <a name="orderform"></a>
+      <h2>Order a Render</h2>
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {% from "_formhelpers.html" import render_field %}
+        {{ render_field(form.email, "full-width") }}
+        {{ render_field(form.keyboard, "") }}
+        {{ render_field(form.profile, "") }}
+        {{ render_field(form.kle, "full-width") }}
+        {{ render_field(form.camera, "") }}
+        {{ render_field(form.background, "") }}
+        <input class="submit button full-width" type="submit" value="Checkout">
+      </form>
+    </div>
+  </body>
+</html>

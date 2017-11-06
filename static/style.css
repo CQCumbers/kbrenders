@@ -53,6 +53,8 @@ h2 {
 
 .sample-img {
     width: 100%;
+    margin: 2em 0px;
+    border-style: solid;
 }
 
 .orderform {
@@ -95,7 +97,7 @@ label {
     border-radius: 0;
 }
 
-.submit {
+.checkout {
     font-family: Avenir, Muli, sans-serif;
     font-size: 1em;
     height: 3em;

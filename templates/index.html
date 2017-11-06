@@ -34,13 +34,13 @@
       <h1 class="logo">kbrenders</h1>
       <p class="slogan">$10 next-day 3D keycap set renders</p>
       <a class="button" href="#orderform">Order a Render</a>
-      <img class="masthead-img" src="static/renders/mockup.png">
+      <img class="masthead-img" src="static/masthead.png">
     </div>
 
     <div class="samples">
       <h2>Sample Renders</h2>
       {% for image in images %}
-      <img class="sample-img" src="static/renders/{{ image }}">
+      <img class="sample-img" src="{{ image }}">
       {% endfor %}
     </div>
 
@@ -56,7 +56,7 @@
         {{ render_field(form.kle, "full-width") }}
         {{ render_field(form.camera, "") }}
         {{ render_field(form.background, "") }}
-        <input class="submit button full-width" type="submit" value="Checkout">
+        <input class="checkout button full-width" type="submit" value="Checkout">
       </form>
     </div>
   </body>

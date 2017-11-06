@@ -6,7 +6,7 @@ from wtforms_components import ColorField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
-import boto3, os, json
+import boto3, os, json, glob
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -32,7 +32,7 @@ def add2queue(message):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = OrderForm()
-    images = os.listdir('static/renders/')
+    images = glob.glob('static/renders/*.png')
     if not form.validate_on_submit():
         if request.method == 'POST':
             flash('There was in error in your order form.')

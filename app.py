@@ -1,17 +1,33 @@
-from flask import Flask, render_template, redirect, flash, request
+from flask import Flask, render_template, redirect, flash, request, Markup
 
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, SelectField
 from wtforms_components import ColorField
 from wtforms.validators import DataRequired
-from flask_wtf.file import FileField, FileAllowed, FileRequired
 
-import boto3, os, json, glob
+import boto3, os, json, glob, markdown
 
 app = Flask(__name__)
 app.config.from_object('config')
 sqs = boto3.resource('sqs')
 queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
+
+
+
+about_text = """
+### What does kbrenders do?
+
+kbrenders is an automated service for 3D rendering certain [keyboard-layout-editor](http://keyboard-layout-editor.com) designs. It is (currently) rather limited in what it can do compared to a professional artist, but it is considerably faster and cheaper. Compared to [kle-render](http://kle-render.herokuapp.com), final output is much more realistic due to kbrenders actually ray tracing every request in blender. While for now it is a free service, I may have to charge a small fee for renders in the future depending on server costs.
+
+### What features are supported?
+
+You must start with one of the provided keyboard-layout-editor templates - custom layouts are not supported. Colors and legend customizations are supported, as well as most unicode glyphs and character picker symbols; besides layout, custom CSS and external images are also not supported. Changes to keycap profile and background color in keyboard-layout-editor are not honored - use the background color and keycap profile fields in the order form instead.
+
+### How should I report bugs or request features?
+
+You can message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers.
+"""
 
 class OrderForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()], description="We'll email the final render to this address within 24 hours.")
@@ -20,6 +36,8 @@ class OrderForm(FlaskForm):
     kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')], description="Use one of the following templates: <a href='http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'>M65</a> or <a href='http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'>TEK80</a>. Only legends shown in kle-render.herokuapp.com will be seen in this tool. Do not modify layout and make sure keycap profiles match for best results.")
     camera = SelectField('Camera Angle', choices=[('Side', 'Side View'), ('Top', 'Top View'), ('Front', 'Front View')])
     background = ColorField('Background', default='#ffffff')
+
+
 
 def add2queue(message):
     message['background'] = message['background'].hex
@@ -36,7 +54,8 @@ def index():
     if not form.validate_on_submit():
         if request.method == 'POST':
             flash('There was in error in your order form.')
-        return render_template('index.html', images=images, form=form)
+        about_rendered = Markup(markdown.markdown(about_text))
+        return render_template('index.html', images=images, form=form, about_text=about_rendered)
     add2queue(form.data)
     return redirect('/')
 

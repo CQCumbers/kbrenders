@@ -1,21 +1,47 @@
+@font-face {
+    font-family: Avenir;
+    src: url(static/fonts/AvenirNextLTPro-Regular.otf) format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Avenir;
+    src: url(static/fonts/AvenirNextLTPro-Bold.otf) format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: Avenir;
+    src: url(static/fonts/AvenirNextLTPro-It.otf) format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: Avenir;
+    src: url(static/fonts/AvenirNextLTPro-BoldIt.otf) format('opentype');
+    font-weight: bold;
+    font-style: italic;
+}
+
 html {
     min-height: calc(100vh - 10px);
     border-style: solid;
     border-color: blue;
+    background-color: whitesmoke;
 }
 
 body {
     max-width: 48em;
     margin: auto;
     color: blue;
-    font-family: Avenir, Muli, sans-serif;
+    font-family: Avenir, sans-serif;
     font-size: 1em;
 }
 
 h2 {
     font-size: 1.8em;
     text-align: center;
-    margin-bottom: 0.5em;
+    margin-bottom: 1.5em;
 }
 
 .button {
@@ -51,9 +77,16 @@ h2 {
     width: 100%;
 }
 
+.about {
+    max-width: 40em;
+    margin: auto;
+    margin-bottom: 4em;
+    padding: 1.2em;
+}
+
 .sample-img {
     width: 100%;
-    margin: 2em 0px;
+    margin-bottom: 4em;
     border-style: solid;
 }
 
@@ -68,7 +101,6 @@ form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1.5em 2.5em;
-    margin-top: 2.5em;
 }
 
 .full-width {
@@ -90,7 +122,7 @@ label {
     border-style: solid;
     border-color: blue;
     border-width: thin;
-    font-family: Avenir, Muli, sans-serif;
+    font-family: Avenir, sans-serif;
     font-size: 1em;
     color: blue;
     -webkit-appearance: none;
@@ -98,7 +130,7 @@ label {
 }
 
 .checkout {
-    font-family: Avenir, Muli, sans-serif;
+    font-family: Avenir, sans-serif;
     font-size: 1em;
     height: 3em;
     margin-top: 1.5em;

@@ -26,7 +26,7 @@ You must start with one of the provided keyboard-layout-editor templates - custo
 
 ### How should I report bugs or request features?
 
-You can message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers.
+Emails should be directed to mail@kbrenders.com. If you are having problems with a specific layout it would help enormously if you could attach the JSON file and the settings used in your order. For general questions you can also message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers.
 """
 
 class OrderForm(FlaskForm):
@@ -50,7 +50,11 @@ def add2queue(message):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = OrderForm()
-    images = glob.glob('static/renders/*.png')
+    #images = glob.glob('static/renders/*.png')
+    images = [('SA Lunchbar on RAMA M65-A, Side View', 'M65_Side.png'),
+            ('SA Lunchbar on RAMA M65-A, Front View', 'M65_Front.png'),
+            ('GMK Carbon on TEK80, Side View', 'TEK80_Side.png'),
+            ('GMK Carbon on TEK80, Top View', 'TEK80_Top.png')]
     if not form.validate_on_submit():
         if request.method == 'POST':
             flash('There was in error in your order form.')

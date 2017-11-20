@@ -13,7 +13,6 @@
     <link rel="shortcut icon" href="static/favicon.ico">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,800">
     <link rel="stylesheet" href="static/style.css">
   </head>
 
@@ -45,7 +44,10 @@
     <div class="samples">
       <h2>Sample Renders</h2>
       {% for image in images %}
-      <img class="sample-img" src="{{ image }}">
+      <figure>
+        <img class="sample-img" src="{{ 'static/renders/'+image[1] }}">
+        <figcaption>{{ image[0] }}</figcaption>
+      </figure>
       {% endfor %}
     </div>
 

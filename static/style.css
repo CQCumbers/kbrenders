@@ -1,24 +1,24 @@
 @font-face {
     font-family: Avenir;
-    src: url(static/fonts/AvenirNextLTPro-Regular.otf) format('opentype');
+    src: url(fonts/AvenirNextLTPro-Regular.otf) format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: Avenir;
-    src: url(static/fonts/AvenirNextLTPro-Bold.otf) format('opentype');
+    src: url(fonts/AvenirNextLTPro-Bold.otf) format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 @font-face {
     font-family: Avenir;
-    src: url(static/fonts/AvenirNextLTPro-It.otf) format('opentype');
+    src: url(fonts/AvenirNextLTPro-It.otf) format('opentype');
     font-weight: normal;
     font-style: italic;
 }
 @font-face {
     font-family: Avenir;
-    src: url(static/fonts/AvenirNextLTPro-BoldIt.otf) format('opentype');
+    src: url(fonts/AvenirNextLTPro-BoldIt.otf) format('opentype');
     font-weight: bold;
     font-style: italic;
 }
@@ -86,8 +86,16 @@ h2 {
 
 .sample-img {
     width: 100%;
-    margin-bottom: 4em;
     border-style: solid;
+    margin-bottom: 0.5em;
+}
+
+figure {
+    margin: auto;
+    margin-bottom: 1.5em;
+    padding: 1em;
+    font-size: 1.1em;
+    text-align: center;
 }
 
 .orderform {

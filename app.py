@@ -33,7 +33,7 @@ class OrderForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()], description="We'll email the final render to this address within 24 hours.")
     keyboard = SelectField('Keyboard', choices=[('M65', 'M65'), ('TEK80', 'TEK80')])
     profile = SelectField('Keycap Profile', choices=[('SA', 'SA'), ('GMK', 'GMK')])
-    kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')], description="Use one of the following templates: <a href='http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'>M65</a> or <a href='http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'>TEK80</a>. Only legends shown in kle-render.herokuapp.com will be seen in this tool. Do not modify layout and make sure keycap profiles match for best results.")
+    kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')], description="<b>You MUST use one of the following templates: <a href='http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'>M65</a> or <a href='http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'>TEK80</a></b>. Only legends shown in kle-render.herokuapp.com will be seen in this tool. Do not modify layout and make sure keycap profiles match for best results.")
     camera = SelectField('Camera Angle', choices=[('Side', 'Side View'), ('Top', 'Top View'), ('Front', 'Front View')])
     background = ColorField('Background', default='#ffffff')
 

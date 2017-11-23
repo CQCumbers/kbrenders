@@ -137,6 +137,10 @@ label {
     border-radius: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 .checkout {
     font-family: Avenir, sans-serif;
     font-size: 1em;

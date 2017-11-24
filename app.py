@@ -32,8 +32,10 @@ Emails should be directed to mail@kbrenders.com. If you are having problems with
 '''
 
 templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'),
+        ('M65', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'),
         ('M65', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/4319599274157d2a0dd0e38328b76878'),
         ('TEK80', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
+        ('TEK80', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
         ('TEK80', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8')]
 
 
@@ -42,7 +44,7 @@ class OrderForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()],
             description="We'll email the final render to this address within 24 hours.")
     keyboard = SelectField('Keyboard', choices=[('M65', 'M65'), ('TEK80', 'TEK80')])
-    profile = SelectField('Keycap Profile', choices=[('SA', 'SA'), ('GMK', 'GMK')])
+    profile = SelectField('Keycap Profile', choices=[('SA', 'SA'), ('GMK', 'GMK'), ('DSA', 'DSA')])
     kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')],
             description='<b>You MUST use this template: {}</b><br/>You can preview legend appearance using <a href="http://www.kle-render.herokuapp.com">kle-render</a>'.format(
                 ' '.join(['<a id="{}" class="template" target="_blank" href="{}">{}</a>'.format(t[0]+'_'+t[1], t[2], t[1]+' on '+t[0]) for t in templates])))

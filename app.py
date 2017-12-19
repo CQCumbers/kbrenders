@@ -19,7 +19,7 @@ queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
 about_text = '''
 ### What does kbrenders do?
 
-kbrenders is an automated service for 3D rendering certain [keyboard-layout-editor](http://keyboard-layout-editor.com) designs. It is (currently) rather limited in what it can do compared to a professional artist, but it is considerably faster and cheaper. Compared to [kle-render](http://kle-render.herokuapp.com), final output is much more realistic due to kbrenders actually ray tracing every request in blender. While for now it is a free service, I may have to charge a small fee for renders in the future depending on server costs.
+kbrenders is an automated service for 3D rendering custom keycap set designs. It works by parsing certain [keyboard-layout-editor](http://keyboard-layout-editor.com) designs into blender scenes that can then be rendered. It is (currently) rather limited in what it can do compared to a professional artist, but it is considerably faster and cheaper. Compared to [kle-render](http://kle-render.herokuapp.com), final output is much more realistic due to kbrenders actually ray tracing every request in blender on cloud servers. The render fee allows me to keep this service running - unlike image compositing, ray tracing is computationally expensive so server costs are more of a concern.
 
 ### What features are supported?
 
@@ -29,7 +29,9 @@ You must start with one of the provided keyboard-layout-editor templates - custo
 
 Emails should be directed to mail@kbrenders.com. If you are having problems with a specific layout it would help enormously if you could attach the JSON file and the settings used in your order. For general questions you can also message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers.
 
-**Many thanks to RAMA for his M65-A model, Photekq for his TEK-80 model, and Mechkeys.ca for his MM2 and Espectro models.**
+Information about service outages, changelogs, and other information will be posted on the [geekhack thead](https://geekhack.org/index.php?topic=92666.0). 
+
+**Many thanks to RAMA, Photekq, and Mechkeys.ca for their keyboard models.**
 '''
 
 templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'),

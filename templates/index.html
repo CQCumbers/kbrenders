@@ -54,7 +54,7 @@
     <div class="orderform">
       <a name="orderform"></a>
       <h2>Order a Render</h2>
-      <form method="POST" enctype="multipart/form-data">
+      <form id="orderform" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
         {% from "_formhelpers.html" import render_field %}
         {{ render_field(form.email, "full-width") }}
@@ -66,10 +66,15 @@
         <input class="checkout button full-width" type="submit" value="Place Order">
       </form>
     </div>
+
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
       crossorigin="anonymous"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script type="text/javascript">
+      var stripeKey = '{{ stripeKey }}';
+    </script>
     <script src="static/script.js"></script>
   </body>
 </html>

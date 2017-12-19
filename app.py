@@ -2,14 +2,15 @@ from flask import Flask, render_template, redirect, flash, request, Markup
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, SelectField
+from wtforms import StringField, SelectField, HiddenField
 from wtforms_components import ColorField
 from wtforms.validators import DataRequired
 
-import boto3, os, json, glob, markdown
+import os, json, glob, markdown, stripe#, boto3
 
 app = Flask(__name__)
 app.config.from_object('config')
+stripe.api_key = os.environ['STRIPE_SECRET_KEY']
 sqs = boto3.resource('sqs')
 queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
 
@@ -28,7 +29,7 @@ You must start with one of the provided keyboard-layout-editor templates - custo
 
 Emails should be directed to mail@kbrenders.com. If you are having problems with a specific layout it would help enormously if you could attach the JSON file and the settings used in your order. For general questions you can also message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers.
 
-**Many thanks to RAMA for his M65-A model and Photekq for his TEK-80 model**
+**Many thanks to RAMA for his M65-A model, Photekq for his TEK-80 model, and Mechkeys.ca for his MM2 and Espectro models.**
 '''
 
 templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'),
@@ -36,20 +37,27 @@ templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca364
         ('M65', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/4319599274157d2a0dd0e38328b76878'),
         ('TEK80', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
         ('TEK80', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
-        ('TEK80', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8')]
+        ('TEK80', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'),
+        ('MM2', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/ea2a231112ffceae047494ac9a93e706'),
+        ('MM2', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/ea2a231112ffceae047494ac9a93e706'),
+        ('MM2', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/eed1f1854dda3999bcdd730f0143c627'),
+        ('Espectro', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/6b996bea3ebf8a85866ddea606e25de4'),
+        ('Espectro', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/6b996bea3ebf8a85866ddea606e25de4'),
+        ('Espectro', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6a03012a82e7bbca14db635142913a7f')]
 
 
 
 class OrderForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()],
             description="We'll email the final render to this address within 24 hours.")
-    keyboard = SelectField('Keyboard', choices=[('M65', 'M65'), ('TEK80', 'TEK80')])
+    keyboard = SelectField('Keyboard', choices=[('M65', 'M65'), ('TEK80', 'TEK80'), ('MM2', 'Mech Mini 2'), ('Espectro', 'Espectro')])
     profile = SelectField('Keycap Profile', choices=[('SA', 'SA'), ('GMK', 'GMK'), ('DSA', 'DSA')])
     kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')],
             description='<b>You MUST use this template: {}</b><br/>You can preview legend appearance using <a href="http://www.kle-render.herokuapp.com">kle-render</a>'.format(
                 ' '.join(['<a id="{}" class="template" target="_blank" href="{}">{}</a>'.format(t[0]+'_'+t[1], t[2], t[1]+' on '+t[0]) for t in templates])))
     camera = SelectField('Camera Angle', choices=[('Side', 'Side View'), ('Top', 'Top View'), ('Front', 'Front View')])
     background = ColorField('Background', default='#ffffff')
+    stripeToken = HiddenField('stripeToken')
 
 def add2queue(message):
     message['background'] = message['background'].hex
@@ -57,6 +65,15 @@ def add2queue(message):
 
     queue.send_message(MessageBody=json.dumps(message), MessageGroupId='render_request')
     flash('Your order has been queued.')
+
+def charge_card(token):
+    charge = stripe.Charge.create(
+        amount=1000,
+        currency='usd',
+        description='3D render of keycap set design',
+        source=token,
+    )
+    return charge
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -70,8 +87,12 @@ def index():
         if request.method == 'POST':
             flash('There was in error in your order form.')
         about_rendered = Markup(markdown.markdown(about_text))
-        return render_template('index.html', images=images, form=form, about_text=about_rendered)
-    add2queue(form.data)
+        return render_template('index.html', images=images, about_text=about_rendered,
+                form=form, stripeKey=os.environ['STRIPE_PUBLISHABLE_KEY'])
+    if charge_card(form.data['stripeToken']):
+        add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
+    else:
+        flash('Your payment could not be processed')
     return redirect('/')
 
 if __name__ == '__main__':

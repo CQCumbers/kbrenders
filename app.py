@@ -11,8 +11,8 @@ import os, json, glob, markdown, stripe#, boto3
 app = Flask(__name__)
 app.config.from_object('config')
 stripe.api_key = os.environ['STRIPE_SECRET_KEY']
-sqs = boto3.resource('sqs')
-queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
+#sqs = boto3.resource('sqs')
+#queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
 
 
 
@@ -92,7 +92,7 @@ def index():
         return render_template('index.html', images=images, about_text=about_rendered,
                 form=form, stripeKey=os.environ['STRIPE_PUBLISHABLE_KEY'])
     if charge_card(form.data['stripeToken']):
-        add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
+        pass#add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
     else:
         flash('Your payment could not be processed')
     return redirect('/')

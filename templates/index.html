@@ -31,24 +31,9 @@
     <!-- Masthead -->
     <div class="masthead">
       <h1 class="logo">kbrenders</h1>
-      <p class="slogan">Free next-day 3D keycap set renders</p>
-      <a class="button" href="#orderform">Order a Render</a>
+      <p class="slogan">Affordable next-day 3D keycap set renders</p>
+      <!--<a class="button" href="#orderform">Order a Render</a>-->
       <img class="masthead-img" src="static/masthead.png">
-    </div>
-
-    <div class="about">
-      <h2>Frequently Asked Questions</h2>
-      {{ about_text }}
-    </div>
-
-    <div class="samples">
-      <h2>Sample Renders</h2>
-      {% for image in images %}
-      <figure>
-        <img class="sample-img" src="{{ 'static/renders/'+image[1] }}">
-        <figcaption>{{ image[0] }}</figcaption>
-      </figure>
-      {% endfor %}
     </div>
 
     <div class="orderform">
@@ -67,6 +52,21 @@
       </form>
     </div>
 
+    <div class="about">
+      <h2>Frequently Asked Questions</h2>
+      {{ about_text }}
+    </div>
+
+    <div class="samples">
+      <h2>Sample Renders</h2>
+      {% for image in images %}
+      <figure>
+        <img class="sample-img" src="{{ 'static/renders/'+image[1] }}">
+        <figcaption>{{ image[0] }}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
@@ -76,5 +76,6 @@
       var stripeKey = '{{ stripeKey }}';
     </script>
     <script src="static/script.js"></script>
+
   </body>
 </html>

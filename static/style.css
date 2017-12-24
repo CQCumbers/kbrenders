@@ -1,108 +1,100 @@
-@font-face {
-    font-family: Avenir;
-    src: url(fonts/AvenirNextLTPro-Regular.otf) format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: Avenir;
-    src: url(fonts/AvenirNextLTPro-Bold.otf) format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: Avenir;
-    src: url(fonts/AvenirNextLTPro-It.otf) format('opentype');
-    font-weight: normal;
-    font-style: italic;
-}
-@font-face {
-    font-family: Avenir;
-    src: url(fonts/AvenirNextLTPro-BoldIt.otf) format('opentype');
-    font-weight: bold;
-    font-style: italic;
-}
-
-html {
-    min-height: calc(100vh - 10px);
-    border-style: solid;
-    border-color: blue;
-    background-color: whitesmoke;
-}
-
 body {
-    max-width: 48em;
+    max-width: 45em;
+    width: calc(100% - 2em);
     margin: auto;
-    color: blue;
-    font-family: Avenir, sans-serif;
-    font-size: 1em;
+    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+    color: #f3f3f6;
+    font-family: Input, monospace;
+    font-size: 0.7em;
+    line-height: 160%;
 }
 
 h2 {
-    font-size: 1.8em;
+    font-size: 1.75em;
     text-align: center;
-    margin-bottom: 1.5em;
+    margin: 0.5em 0em 1em 0em;
+}
+
+a {
+    color: #f3f3f6;
 }
 
 .button {
-    background-color: blue;
-    color: white;
-    border-style: solid;
-    border-color: blue;
+    background-color: mediumblue;
+    color: #f3f3f6;
     padding: 0.3em 1em;
     text-decoration: none;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+    border-radius: 4px;
 }
+
 .button:hover {
-    background-color: white;
-    color: blue;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
 
 .masthead {
     text-align: center;
-    margin: auto;
-    margin-top: 4em;
+    margin: 3.5em auto;
 }
 
 .logo {
-    font-size: 2.7em;
-    margin: 0px;
+    font-size: 3.6em;
+    margin: 0em;
+    margin-bottom: 0.3em;
 }
 
 .slogan {
-    font-size: 1.2em;
+    font-size: 1em;
     margin-top: 0px;
 }
 
 .masthead-img {
     width: 100%;
+    display: none;
 }
 
 .about {
-    max-width: 40em;
-    margin: auto;
+    width: calc(100% - 1em);
     margin-bottom: 4em;
-    padding: 1.2em;
+    padding-left: 1em;
+    padding-right: 0.5em;
 }
 
 .sample-img {
     width: 100%;
-    border-style: solid;
-    margin-bottom: 0.5em;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 figure {
-    margin: auto;
-    margin-bottom: 1.5em;
-    padding: 1em;
+    margin: 0em;
+    margin-top: 2em;
+    margin-bottom: 2.5em;
+    width: 100%;
+    background-color: #f3f3f6;
+    color: #311842;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+    border-radius: 4px;
     font-size: 1.1em;
     text-align: center;
 }
 
+figcaption {
+    padding: 2em 1em 1em 1em;
+}
+
 .orderform {
-    max-width: 32em;
-    margin: auto;
-    padding: 1.2em;
-    margin-bottom: 2em;
+    width: calc(100% - 6em);
+    padding: 2em 3em 3em 3em;
+    margin-bottom: 4em;
+    border-radius: 4px;
+    background-color: #f3f3f6;
+    color: #311842;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+}
+
+.template {
+    color: #311842;
 }
 
 form {
@@ -124,17 +116,16 @@ label {
 	display: block;
     box-sizing: border-box;
 	width: 100%;
-    height: 2.5em;
+    height: 2.8em;
     margin: 0.25em 0px;
     padding: 0.5em;
     border-style: solid;
-    border-color: blue;
+    border-color: mediumblue;
     border-width: thin;
-    font-family: Avenir, sans-serif;
+    border-radius: 4px;
+    font-family: Input, monospace;
     font-size: 1em;
-    color: blue;
     -webkit-appearance: none;
-    border-radius: 0;
 }
 
 .hidden {
@@ -142,9 +133,9 @@ label {
 }
 
 .checkout {
-    font-family: Avenir, sans-serif;
+    font-family: Input, monospace;
     font-size: 1em;
-    height: 3em;
+    height: 4em;
     margin-top: 1.5em;
 }
 
@@ -155,6 +146,8 @@ label {
     max-width: 32em;
     padding: 1em;
     font-size: 1.2em;
-    color: white;
-    background-color: blue;
+    border-radius: 4px;
+    background-color: #f3f3f6;
+    color: #311842;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }

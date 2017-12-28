@@ -11,8 +11,8 @@ import os, json, glob, markdown, stripe#, boto3
 app = Flask(__name__)
 app.config.from_object('config')
 stripe.api_key = os.environ['STRIPE_SECRET_KEY']
-#sqs = boto3.resource('sqs')
-#queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
+sqs = boto3.resource('sqs')
+queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
 
 
 
@@ -55,7 +55,7 @@ class OrderForm(FlaskForm):
     keyboard = SelectField('Keyboard', choices=[('M65', 'M65'), ('TEK80', 'TEK80'), ('MM2', 'Mech Mini 2'), ('Espectro', 'Espectro')])
     profile = SelectField('Keycap Profile', choices=[('SA', 'SA'), ('GMK', 'GMK'), ('DSA', 'DSA')])
     kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')],
-            description='<b>You MUST use this template: {}</b><br/>You can preview legend appearance using <a href="http://www.kle-render.herokuapp.com">kle-render</a>'.format(
+            description='<b>You MUST use this template: {}</b><br/>You can preview legend appearance using <a href="http://kle-render.herokuapp.com">kle-render</a>'.format(
                 ' '.join(['<a id="{}" class="template" target="_blank" href="{}">{}</a>'.format(t[0]+'_'+t[1], t[2], t[1]+' on '+t[0]) for t in templates])))
     camera = SelectField('Camera Angle', choices=[('Side', 'Side View'), ('Top', 'Top View'), ('Front', 'Front View')])
     background = ColorField('Background', default='#ffffff')
@@ -92,7 +92,7 @@ def index():
         return render_template('index.html', images=images, about_text=about_rendered,
                 form=form, stripeKey=os.environ['STRIPE_PUBLISHABLE_KEY'])
     if charge_card(form.data['stripeToken']):
-        pass#add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
+        add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
     else:
         flash('Your payment could not be processed')
     return redirect('/')

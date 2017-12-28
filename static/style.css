@@ -4,7 +4,7 @@ body {
     margin: auto;
     background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
     color: #f3f3f6;
-    font-family: Input, monospace;
+    font-family: 'Fira Mono', monospace;
     font-size: 0.7em;
     line-height: 160%;
 }
@@ -16,7 +16,7 @@ h2 {
 }
 
 a {
-    color: #f3f3f6;
+    color: inherit;
 }
 
 .button {
@@ -60,10 +60,8 @@ a {
     padding-right: 0.5em;
 }
 
-.sample-img {
-    width: 100%;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+.samples {
+    margin-bottom: 4em;
 }
 
 figure {
@@ -71,16 +69,18 @@ figure {
     margin-top: 2em;
     margin-bottom: 2.5em;
     width: 100%;
-    background-color: #f3f3f6;
-    color: #311842;
+}
+
+.sample-img {
+    width: 100%;
     box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
     border-radius: 4px;
-    font-size: 1.1em;
-    text-align: center;
 }
 
 figcaption {
-    padding: 2em 1em 1em 1em;
+    font-size: 1.1em;
+    text-align: center;
+    padding: 1em 1em 1em 1em;
 }
 
 .orderform {

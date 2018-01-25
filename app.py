@@ -6,9 +6,10 @@ from wtforms import StringField, SelectField, HiddenField
 from wtforms_components import ColorField
 from wtforms.validators import DataRequired
 
-import os, json, glob, markdown, stripe#, boto3
+import os, json, glob, markdown, stripe, boto3
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application # for compatibility with EB
 app.config.from_object('config')
 stripe.api_key = os.environ['STRIPE_SECRET_KEY']
 sqs = boto3.resource('sqs')

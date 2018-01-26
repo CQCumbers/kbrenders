@@ -16,7 +16,6 @@ sqs = boto3.resource('sqs')
 queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
 
 
-
 about_text = '''
 ### What does kbrenders do?
 
@@ -47,7 +46,6 @@ templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca364
         ('Espectro', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/6b996bea3ebf8a85866ddea606e25de4'),
         ('Espectro', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/6b996bea3ebf8a85866ddea606e25de4'),
         ('Espectro', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6a03012a82e7bbca14db635142913a7f')]
-
 
 
 class OrderForm(FlaskForm):

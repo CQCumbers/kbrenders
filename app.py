@@ -4,7 +4,7 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, SelectField, HiddenField
 from wtforms_components import ColorField
 from wtforms.validators import DataRequired
-from flask-sslify import SSLify
+from flask_sslify import SSLify
 import os, json, glob, markdown, stripe, boto3
 
 app = Flask(__name__)

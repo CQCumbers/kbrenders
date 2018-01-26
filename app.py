@@ -1,15 +1,14 @@
 from flask import Flask, render_template, redirect, flash, request, Markup
-
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, SelectField, HiddenField
 from wtforms_components import ColorField
 from wtforms.validators import DataRequired
-
+from flask-sslify import SSLify
 import os, json, glob, markdown, stripe, boto3
 
-application = Flask(__name__)
-app = application # for compatibility with EB
+app = Flask(__name__)
+sslify = SSLify(app)
 app.config.from_object('config')
 stripe.api_key = os.environ['STRIPE_SECRET_KEY']
 sqs = boto3.resource('sqs')

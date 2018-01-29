@@ -80,9 +80,9 @@ def charge_card(token):
 def index():
     form = OrderForm()
     images = [('SA Lunchbar on RAMA M65-A, Side View', 'M65_Side.png'),
-            ('SA Lunchbar on RAMA M65-A, Front View', 'M65_Front.png'),
+            ('SA Lunchbar on Espectro, Front View', 'Espectro_Front.png'),
             ('GMK Carbon on TEK80, Side View', 'TEK80_Side.png'),
-            ('GMK Carbon on TEK80, Top View', 'TEK80_Top.png')]
+            ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top.png')]
     if not form.validate_on_submit():
         if request.method == 'POST':
             flash('There was in error in your order form.')

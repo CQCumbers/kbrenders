@@ -12,3 +12,5 @@ if num_messages > 0:
     instance.start()
     print('Start signal sent to instance '+os.environ['AWS_INSTANCE_ID'])
     print('Processing '+str(num_messages)+' messages')
+else:
+    print('No messages found in SQS, no instances started')

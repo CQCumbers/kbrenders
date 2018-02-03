@@ -79,20 +79,20 @@ def charge_card(token):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = OrderForm()
-    images = [('SA Lunchbar on RAMA M65-A, Side View', 'M65_Side.png'),
+    images = [('DSA Lunchbar on RAMA M65-A, Side View', 'M65_Side.png'),
             ('SA Lunchbar on Espectro, Front View', 'Espectro_Front.png'),
             ('GMK Carbon on TEK80, Side View', 'TEK80_Side.png'),
             ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top.png')]
     if not form.validate_on_submit():
         if request.method == 'POST':
-            flash('There was in error in your order form.')
+            flash('There was in error in your order form. Your card was not charged.')
         about_rendered = Markup(markdown.markdown(about_text))
         return render_template('index.html', images=images, about_text=about_rendered,
                 form=form, stripeKey=os.environ['STRIPE_PUBLISHABLE_KEY'])
     if charge_card(form.data['stripeToken']):
         add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
     else:
-        flash('Your payment could not be processed')
+        flash('Your payment could not be processed. Your card was not charged.')
     return redirect('/')
 
 if __name__ == '__main__':

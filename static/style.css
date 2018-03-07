@@ -1,16 +1,17 @@
 body {
-    max-width: 45em;
+    max-width: 60em;
     width: calc(100% - 2em);
     margin: auto;
     background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
     color: #f3f3f6;
-    font-family: 'Fira Mono', monospace;
-    font-size: 0.7em;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9em;
     line-height: 160%;
 }
 
 h2 {
-    font-size: 1.75em;
+    font-size: 2em;
+    font-weight: bold;
     text-align: center;
     margin: 0.5em 0em 1em 0em;
 }
@@ -39,6 +40,7 @@ a {
 
 .logo {
     font-size: 3.6em;
+    font-weight: 900;
     margin: 0em;
     margin-bottom: 0.3em;
 }
@@ -85,11 +87,14 @@ figcaption {
 
 .orderform {
     width: calc(100% - 6em);
+    max-width: 40em;
+    margin: auto;
     padding: 2em 3em 3em 3em;
     margin-bottom: 4em;
     border-radius: 4px;
     background-color: #f3f3f6;
     color: #311842;
+    font-family: 'Roboto Mono', monospace;
     box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
 
@@ -123,8 +128,8 @@ label {
     border-color: mediumblue;
     border-width: thin;
     border-radius: 4px;
-    font-family: Input, monospace;
     font-size: 1em;
+    font-family: 'Roboto Mono', monospace;
     -webkit-appearance: none;
 }
 
@@ -133,8 +138,8 @@ label {
 }
 
 .checkout {
-    font-family: Input, monospace;
     font-size: 1em;
+    font-family: 'Roboto Mono', monospace;
     height: 4em;
     margin-top: 1.5em;
 }

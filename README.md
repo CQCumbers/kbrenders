@@ -9,5 +9,5 @@ This repo is only for the "frontend" server component of kbrenders. The backend 
 ![SA Lunchbar on M65-A, Side View](static/renders/M65_Side.png)
 SA Lunchbar on RAMA M65-A, Side View
 
-![GMK Carbon on TEK80, Top View](static/renders/TEK80_Top.png)
-GMK Carbon on TEK80, Top View
+![GMK Carbon on Mech Mini 2, Top View](static/renders/MM2_Top.png)
+GMK Carbon on Mech Mini 2, Top View

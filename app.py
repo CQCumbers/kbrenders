@@ -28,17 +28,17 @@ You must start with one of the provided keyboard-layout-editor templates - custo
 
 Emails should be directed to mail@kbrenders.com. If you are having problems with a specific layout it would help enormously if you could attach the JSON file and the settings used in your order. For general questions you can also message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers.
 
-Information about service outages, changelogs, and other information will be posted on the [geekhack thead](https://geekhack.org/index.php?topic=92666.0). 
+Service outages, changelogs, and other information will be posted on the **[geekhack thead](https://geekhack.org/index.php?topic=92666.0)**. 
 
-**Many thanks to RAMA, Photekq, and Mechkeys.ca for their keyboard models.**
+*Many thanks to RAMA, Mech27, and Mechkeys.ca for their keyboard models.*
 '''
 
 templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'),
         ('M65', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/3ca3649e1d048134ddd0e835d1dd735b'),
         ('M65', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/4319599274157d2a0dd0e38328b76878'),
-        ('TEK80', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
-        ('TEK80', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
-        ('TEK80', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'),
+        ('Mech27', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
+        ('Mech27', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/10629d008a99d8d6eb6f8c59414b5dd8'),
+        ('Mech27', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'),
         ('MM2', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/ea2a231112ffceae047494ac9a93e706'),
         ('MM2', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/ea2a231112ffceae047494ac9a93e706'),
         ('MM2', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/eed1f1854dda3999bcdd730f0143c627'),
@@ -50,7 +50,7 @@ templates = [('M65', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/3ca364
 class OrderForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()],
             description="We'll email the final render to this address within 24 hours.")
-    keyboard = SelectField('Keyboard', choices=[('M65', 'M65'), ('TEK80', 'TEK80'), ('MM2', 'Mech Mini 2'), ('Espectro', 'Espectro')])
+    keyboard = SelectField('Keyboard', choices=[('MM2', 'Mech Mini 2 (40%)'), ('M65', 'M65-A (65%)'), ('Mech27', 'Mech27 (TKL)'), ('Espectro', 'Espectro (96%)')])
     profile = SelectField('Keycap Profile', choices=[('SA', 'SA'), ('GMK', 'GMK'), ('DSA', 'DSA')])
     kle = FileField('KLE JSON', validators=[FileRequired(), FileAllowed(['json'], 'Upload must be JSON')],
             description='<b>You MUST use this template: {}</b><br/>You can preview legend appearance using <a href="http://kle-render.herokuapp.com">kle-render</a>'.format(
@@ -79,10 +79,10 @@ def charge_card(token):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = OrderForm()
-    images = [('DSA Lunchbar on RAMA M65-A, Side View', 'M65_Side.png'),
-            ('SA Lunchbar on Espectro, Front View', 'Espectro_Front.png'),
-            ('GMK Carbon on TEK80, Side View', 'TEK80_Side.png'),
-            ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top.png')]
+    images = [('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top.png'),
+            ('DSA Lunchbar on M65-A, Side View', 'M65_Side.png'),
+            ('GMK Carbon on Mech27, Side View', 'Mech27_Side.png'),
+            ('SA Lunchbar on Espectro, Front View', 'Espectro_Front.png')]
     if not form.validate_on_submit():
         if request.method == 'POST':
             flash('There was in error in your order form. Your card was not charged.')
@@ -90,7 +90,7 @@ def index():
         return render_template('index.html', images=images, about_text=about_rendered,
                 form=form, stripeKey=os.environ['STRIPE_PUBLISHABLE_KEY'])
     if charge_card(form.data['stripeToken']):
-        add2queue({i:form.data[i] for i in form.data if i != 'csrf_token'})
+        add2queue({i:form.data[i] for i in form.data if i != 'csrf_token' and i != 'stripeToken'})
     else:
         flash('Your payment could not be processed. Your card was not charged.')
     return redirect('/')

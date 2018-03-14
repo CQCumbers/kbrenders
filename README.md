@@ -7,7 +7,7 @@ This repo is only for the "frontend" server component of kbrenders. The backend 
 ## Sample Renders
 
 ![SA Lunchbar on M65-A, Side View](static/renders/M65_Side.png)
-SA Lunchbar on RAMA M65-A, Side View
+SA Lunchbar on M65-A, Side View
 
 ![GMK Carbon on Mech Mini 2, Top View](static/renders/MM2_Top.png)
 GMK Carbon on Mech Mini 2, Top View

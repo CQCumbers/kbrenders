@@ -1,15 +1,11 @@
-{% macro render_field(field, div_class) %}
-  <div class="{{ div_class }}">
+{% macro render_field(field) %}
+  <div class="form-group">
     {{ field.label }}
-    {{ field(class_="form-input", required=field.flags.required) }}
-    {{ field.description | safe }}
-    {% if field.errors %}
-      <ul class="errors">
-      {% for error in field.errors %}
-        <li>{{ error }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
+    {{ field(class_="form-control is-invalid" if field.errors else "form-control", required=field.flags.required) }}
+    <span class="form-text">{{ field.description | safe }}</span>
+    {% for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
   </div>
 {% endmacro %}
 

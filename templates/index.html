@@ -13,64 +13,122 @@
     <link rel="shortcut icon" href="static/favicon.ico">
 
     <!-- Stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
     <link rel="stylesheet" href="static/style.css">
   </head>
 
-  <body>
-    <!-- Flashed messages -->
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="flashes">
-        {% for message in messages %}
-          <span>{{ message }}</span>
-        {% endfor %}
+  <body data-spy="scroll" data-target="#navbar">
+    <header>
+      <nav id="navbar" class="navbar navbar-light bg-white navbar-expand-md fixed-top">
+        <div class="container">
+          <a class="navbar-brand text-primary" href="#"><span class="h3">kbrenders</span></a>
+          <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-end" id="navLinks">
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link" href="#order-anchor">Order Form</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#faq">FAQ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#sample-renders">Sample Renders</a>
+              </li>
+            </ul>
+          </div>
         </div>
-      {% endif %}
-    {% endwith %}
+      </nav>
+    </header>
 
-    <!-- Masthead -->
-    <div class="masthead">
-      <h1 class="logo">kbrenders</h1>
-      <p class="slogan">Affordable next-day 3D keycap set renders</p>
-    </div>
+    <main>
+      <!-- Masthead -->
+      <div id="order-anchor" class="jumbotron jumbotron-fluid masthead">
+        <div class="container mt-5">
+          <div class="row">
+            <div class="col-md">
+              <h1 class="jumbotron-heading text-white">Fast & Affordable<br/>3D Keycap Renders</h1>
+              <p class="lead text-light">
+                Select a keyboard layout and keycap profile, then modify the provided template to specify custom colors and legends. We'll email you a high resolution 3D render of your design within 24 hours.
+              </p>
+            </div>
+            
+            <div class="col-md-7">
+              <!-- Flashed messages -->
+              {% for message in get_flashed_messages() %}
+              <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">
+                  <span>&times;</span>
+                </button>
+              </div>
+              {% endfor %}
 
-    <div class="orderform">
-      <a name="orderform"></a>
-      <h2>Order a Render</h2>
-      <form id="orderform" method="POST" enctype="multipart/form-data">
-        {{ form.csrf_token }}
-        {% from "_formhelpers.html" import render_field %}
-        {{ render_field(form.email, "full-width") }}
-        {{ render_field(form.keyboard, "") }}
-        {{ render_field(form.profile, "") }}
-        {{ render_field(form.kle, "full-width") }}
-        {{ render_field(form.camera, "") }}
-        {{ render_field(form.background, "") }}
-        <input class="checkout button full-width" type="submit" value="Place Order ($10)">
-      </form>
-    </div>
+              <!-- Order Form -->
+              <div class="card card-body bg-light">
+                <h2 class="card-title">Order a Render</h2>
+                <form id="order-form" method="POST" enctype="multipart/form-data">
+                  {{ form.csrf_token }}
+                  {% from "_formhelpers.html" import render_field %}
+                  {{ render_field(form.email) }}
+                  <div class="form-row">
+                    <div class="col-md-6">{{ render_field(form.keyboard) }}</div>
+                    <div class="col-md-6">{{ render_field(form.profile) }}</div>
+                  </div>
+                  {{ render_field(form.kle) }}
+                  <div class="form-row">
+                    <div class="col-md-6">{{ render_field(form.camera) }}</div>
+                    <div class="col-md-6">{{ render_field(form.background) }}</div>
+                  </div>
+                  <input class="btn btn-lg btn-primary btn-block" type="submit" value="Place Order ($10)">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="about">
-      <h2>Frequently Asked Questions</h2>
-      {{ about_text }}
-    </div>
+      <div class="container pb-5">
+        <h2 class="mb-3 scroll-anchor" id="faq">
+          Frequently Asked Questions
+        </h2>
+        {{ about_text }}
+      </div>
 
-    <div class="samples">
-      <h2>Sample Renders</h2>
-      {% for image in images %}
-      <figure>
-        <img class="sample-img" src="{{ 'static/renders/'+image[1] }}">
-        <figcaption>{{ image[0] }}</figcaption>
-      </figure>
-      {% endfor %}
-    </div>
+      <div class="bg-light py-4">
+        <div class="container">
+          <h2 class="scroll-anchor" id="sample-renders">
+            Sample Renders
+          </h2>
+          <div class="row">
+          {% for image in images %}
+          <a class="col-md-6" data-title="{{ image[0] }}" data-toggle="lightbox" data-gallery="render-gallery" href="{{ 'static/renders/'+image[1] }}">
+              <img class="img-fluid my-3" src="{{ 'static/renders/'+image[1] }}">
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
 
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-      crossorigin="anonymous"></script>
+    <footer class="footer">
+      <div class="container py-2">
+        <a class="btn btn-link mb-1" href="https://geekhack.org/index.php?topic=92666.0">Changelog</a>
+        <button class="btn btn-white disabled float-right">
+          Created by <a href="http://github.com/CQCumbers">CQCumbers</a>
+        </button>
+      </div>
+    </footer>
+
+    <!-- JQuery, Bootstrap, Lightbox & Stripe JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
+
     <script type="text/javascript">
       var stripeKey = '{{ stripeKey }}';
     </script>

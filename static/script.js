@@ -1,7 +1,7 @@
 function showTemplate() {
-  $('.template').addClass('hidden');
+  $('.template').addClass('d-none');
   var selected = $('#keyboard').val()+'_'+$('#profile').val();
-  $('#'+selected).removeClass('hidden');
+  $('#'+selected).removeClass('d-none');
 }
 
 var handler = StripeCheckout.configure({
@@ -16,17 +16,23 @@ var handler = StripeCheckout.configure({
       .attr('type', 'hidden')
       .attr('name', 'stripeToken')
       .val(t.id);
-    $('#orderform').append($(token));
-    $('#orderform').submit();
+    $('#order-form').append($(token));
+    $('#order-form').submit();
   }
 });
 
+$(document).on('click', '[data-toggle="lightbox"]', function(e) {
+    e.preventDefault();
+    $(this).ekkoLightbox();
+});
+
 $('#keyboard, #profile').change(showTemplate);
-$('#orderform').submit(function(e) {
+$('#order-form').submit(function(e) {
   // if triggered by human
   if (e.originalEvent !== undefined) {
     handler.open({email: $('#email').val()});
     e.preventDefault();
   }
 });
+
 showTemplate();

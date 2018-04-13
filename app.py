@@ -1,4 +1,4 @@
-import os, json, glob, markdown, stripe, boto3
+import os, json, glob, markdown, redis, stripe
 import flask_wtf, flask_sslify, wtforms, wtforms_components, wtforms.validators
 from flask import Flask, render_template, redirect, flash, request, Markup
 from flask_wtf.file import FileField, FileAllowed, FileRequired
@@ -6,9 +6,8 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 app = Flask(__name__)
 sslify = flask_sslify.SSLify(app)
 app.config.from_object('config')
-stripe.api_key = os.environ['STRIPE_SECRET_KEY']
-sqs = boto3.resource('sqs')
-queue = sqs.get_queue_by_name(QueueName='kbrenders-queue.fifo')
+stripe.api_key = app.config['STRIPE_SECRET_KEY']
+queue = redis.from_url(app.config['REDIS_URL'])
 
 about_text = '''
 #### What does kbrenders do?
@@ -20,7 +19,6 @@ If you're designing a custom set of mechanical keyboard keycaps for a group buy,
 You should first fill in the form above with a keyboard, and keycap profile for your render, then start editing the provided keyboard-layout-editor template. Keep in mind that arbitrary key layouts - as well as custom CSS - are *not* supported. What can be modified are colors and legends, which can include most unicode glyphs and character picker symbols. Custom legend images will also work as long as they take up the entire surface of a keycap. If you are unsure how your legends will render, you can preview exactly how they will look using [kle-render](http://kle-render.herokuapp.com) (kbrenders uses the same code for generating legends). After customizing the template to your satisfaction, download the JSON file from keyboard-layout-editor using the top right button and upload it into the Layout JSON form field. You can also change the camera angle and background color - click on the sample renders for a general idea of what these options do.
 
 #### What if my layout doesn't render correctly?
-
 If you are having problems with a specific render, you can email me at mail@kbrenders.com. Please attach the JSON file and other settings used in your order - I need them to be able to help you. In most cases I can redo the render or refund you if the original result was not satisfactory, though this is a hobby for me so it may take a few days before I can respond. In my experience, the most common reason for incorrect renders is using a different keyboard-layout-editor layout than the template, so it may be worth it to double check that you haven't changed any key sizes or locations before submitting. For general bug reports, questions, and feature requests you can also message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers. Service outages, changelogs, and other information will be posted on the **[geekhack thead](https://geekhack.org/index.php?topic=92666.0)**. 
 
 *Many thanks to RAMA, Mech27, and Mechkeys.ca for their keyboard models.*
@@ -81,7 +79,10 @@ class OrderForm(flask_wtf.FlaskForm):
 def add2queue(message):
     message['background'] = message['background'].hex
     message['kle'] = message['kle'].read().decode('utf-8')
-    queue.send_message(MessageBody=json.dumps(message), MessageGroupId='render_request')
+    message.pop('csrf_token', None)
+    message.pop('stripeToken', None)
+
+    queue.lpush('orders', json.dumps(message))
     flash('Your order has been queued.')
 
 
@@ -115,10 +116,10 @@ def index():
             images=images,
             about_text=about_rendered,
             form=form,
-            stripeKey=os.environ['STRIPE_PUBLISHABLE_KEY']
+            stripeKey=app.config['STRIPE_PUBLISHABLE_KEY']
         )
     if charge_card(form.data['stripeToken']):
-        add2queue({i:form.data[i] for i in form.data if i != 'csrf_token' and i != 'stripeToken'})
+        add2queue(form.data)
     else:
         flash('Your payment could not be processed. Your card was not charged.')
     return redirect('/')

@@ -1,10 +1,9 @@
 import os, json, glob, markdown, redis, stripe
-import flask_wtf, flask_sslify, wtforms, wtforms_components, wtforms.validators
+import flask_wtf, wtforms, wtforms_components, wtforms.validators
 from flask import Flask, render_template, redirect, flash, request, Markup
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 app = Flask(__name__)
-sslify = flask_sslify.SSLify(app)
 app.config.from_object('config')
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 queue = redis.from_url(app.config['REDIS_URL'])

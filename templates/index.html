@@ -105,8 +105,8 @@
           </h2>
           <div class="row">
           {% for image in images %}
-          <a class="col-md-6" data-title="{{ image[0] }}" data-toggle="lightbox" data-gallery="render-gallery" href="{{ 'static/renders/'+image[1] }}">
-              <img class="img-fluid my-3" src="{{ 'static/renders/'+image[1] }}">
+          <a class="col-md-6" data-title="{{ image[0] }}" data-toggle="lightbox" data-gallery="render-gallery" href="{{ 'static/renders/'+image[1]+'.png' }}">
+            <img class="img-fluid my-3" src="{{ 'static/renders/'+image[1]+'@sm.png' }}" srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 1920w' }}">
             </a>
           {% endfor %}
         </div>

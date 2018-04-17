@@ -100,11 +100,11 @@ def charge_card(token):
 def index():
     form = OrderForm()
     images = [
-        ('GMK Carbon on Mech27, Side View', 'Mech27_Side.png'),
-        ('SA Lunchbar on Espectro, Front View', 'Espectro_Front.png'),
-        ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top.png'),
-        ('DSA Lunchbar on M65-A, Side View', 'M65_Side.png'),
-        ('GMK Carbon on Klippe, Front View', 'Klippe_Front.png')
+        ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
+        ('SA Lunchbar on Espectro, Front View', 'Espectro_Front'),
+        ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
+        ('DSA Lunchbar on M65-A, Side View', 'M65_Side'),
+        ('GMK Carbon on Klippe, Front View', 'Klippe_Front')
     ]
     if not form.validate_on_submit():
         if request.method == 'POST':

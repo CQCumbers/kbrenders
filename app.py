@@ -20,7 +20,7 @@ You should first fill in the form above with a keyboard, and keycap profile for 
 #### What if my layout doesn't render correctly?
 If you are having problems with a specific render, you can email me at mail@kbrenders.com. Please attach the JSON file and other settings used in your order - I need them to be able to help you. In most cases I can redo the render or refund you if the original result was not satisfactory, though this is a hobby for me so it may take a few days before I can respond. In my experience, the most common reason for incorrect renders is using a different keyboard-layout-editor layout than the template, so it may be worth it to double check that you haven't changed any key sizes or locations before submitting. For general bug reports, questions, and feature requests you can also message me on reddit as [/u/CQ_Cumbers](http://reddit.com/u/CQ_Cumbers) or on geekhack as CQ_Cumbers. Service outages, changelogs, and other information will be posted on the **[geekhack thead](https://geekhack.org/index.php?topic=92666.0)**. 
 
-*Many thanks to RAMA, Mech27, and Mechkeys.ca for their keyboard models.*
+*Many thanks to RAMA, Mech27, Simen, and Mechkeys.ca for their keyboard models.*
 '''
 
 templates = [
@@ -38,7 +38,10 @@ templates = [
     ('Mech27', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6e6692825b348f40c040ca9750e469a8'),
     ('Espectro', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/6b996bea3ebf8a85866ddea606e25de4'),
     ('Espectro', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/6b996bea3ebf8a85866ddea606e25de4'),
-    ('Espectro', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6a03012a82e7bbca14db635142913a7f')
+    ('Espectro', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/6a03012a82e7bbca14db635142913a7f'),
+    ('Triangle', 'SA', 'http://www.keyboard-layout-editor.com/#/gists/b86a688e6502fcc910d4b32ca2fa642e'),
+    ('Triangle', 'DSA', 'http://www.keyboard-layout-editor.com/#/gists/b86a688e6502fcc910d4b32ca2fa642e'),
+    ('Triangle', 'GMK', 'http://www.keyboard-layout-editor.com/#/gists/11f7fc1a19c7f2210f560a93c8ab82a2')
 ]
 
 t_str = '<a id="{0}_{1}" class="template" target="_blank" href="{2}">{1} on {0}</a>'
@@ -55,7 +58,8 @@ class OrderForm(flask_wtf.FlaskForm):
         ('Klippe', 'Klippe (60%)'),
         ('M65', 'M65-A (65%)'),
         ('Mech27', 'Mech27 (TKL)'),
-        ('Espectro', 'Espectro (96%)')
+        ('Espectro', 'Espectro (96%)'),
+        ('Triangle', 'Triangle (Full-size)')
     ])
     profile = wtforms.SelectField('Keycap Profile', choices=[
         ('SA', 'SA'),
@@ -104,7 +108,8 @@ def index():
         ('SA Lunchbar on Espectro, Front View', 'Espectro_Front'),
         ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
         ('DSA Lunchbar on M65-A, Side View', 'M65_Side'),
-        ('GMK Carbon on Klippe, Front View', 'Klippe_Front')
+        ('GMK Carbon on Klippe, Front View', 'Klippe_Front'),
+        ('SA Lunchbar on Triangle, Top View', 'Triangle_Top')
     ]
     if not form.validate_on_submit():
         if request.method == 'POST':

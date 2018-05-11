@@ -15,7 +15,7 @@ Jinja2==2.10
 Markdown==2.6.11
 MarkupSafe==1.0
 python-dotenv==0.8.2
-redis==2.10.6
+-e git+https://github.com/maruno/redis-py.git@fix_from_url#egg=redis
 requests==2.18.4
 six==1.11.0
 stripe==1.79.1

@@ -81,7 +81,7 @@ class OrderForm(flask_wtf.FlaskForm):
 
 def add2queue(message):
     message['background'] = message['background'].hex
-    message['kle'] = message['kle'].read().decode('utf-8')
+    message['kle'] = json.load(message['kle'])
     message.pop('csrf_token', None)
     message.pop('stripeToken', None)
 

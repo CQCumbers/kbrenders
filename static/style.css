@@ -7,10 +7,6 @@
     background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
 }
 
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
 input[type=color].form-control {
     height: calc(2.25rem + 2px);
     padding: 2px;

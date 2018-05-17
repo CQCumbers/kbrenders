@@ -14,15 +14,18 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
     <link rel="stylesheet" href="static/style.css">
   </head>
 
   <body data-spy="scroll" data-target="#navbar">
     <header>
-      <nav id="navbar" class="navbar navbar-dark navbar-expand-md bg-dark fixed-top box-shadow">
+      <nav id="navbar" class="navbar navbar-dark navbar-expand-md bg-dark fixed-top">
         <div class="container">
-          <a class="navbar-brand text-white" href="#"><span class="h3">kbrenders</span></a>
+          <a class="navbar-brand text-white" href="#">
+            <img class="mb-1" src="static/logo.svg" width=28 height=28>
+            <span class="h3">kbrenders</span>
+          </a>
           <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -106,9 +109,9 @@
           </h2>
           <div class="row">
           {% for image in images %}
-          <a class="col-md-6" data-title="{{ image[0] }}" data-toggle="lightbox" data-gallery="render-gallery" href="{{ 'static/renders/'+image[1]+'.png' }}">
-            <img class="img-fluid my-3" src="{{ 'static/renders/'+image[1]+'@sm.png' }}" srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 1920w' }}">
-            </a>
+          <a class="col-md-6 p-1" href="{{ 'static/renders/'+image[1]+'.png' }}" data-lightbox="renders" data-title="{{ image[0] }}">
+            <img class="img-fluid" src="{{ 'static/renders/'+image[1]+'@sm.png' }}" srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 1920w' }}" alt="{{ image[1] }}">
+          </a>
           {% endfor %}
         </div>
       </div>
@@ -124,14 +127,20 @@
     </footer>
 
     <!-- JQuery, Bootstrap, Lightbox & Stripe JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
 
     <script type="text/javascript">
       var stripeKey = '{{ stripeKey }}';
+      lightbox.option({
+        'resizeDuration': 200,
+        'fadeDuration': 200,
+        'imageFadeDuration': 0,
+        'wrapAround': true,
+      });
     </script>
     <script src="static/script.js"></script>
 

@@ -1,8 +1,26 @@
+$('.custom-file-input').on('change', function() {
+  let fileName = $(this).val().split('\\').pop();
+  $(this).next('.custom-file-label').addClass("selected").html(fileName);
+});
+
 function showTemplate() {
   $('.template').addClass('d-none');
   var selected = $('#keyboard').val()+'_'+$('#profile').val();
   $('#'+selected).removeClass('d-none');
 }
+
+$('#keyboard, #profile').change(showTemplate);
+$('#order-form').submit(function(e) {
+  // if triggered by human
+  if (e.originalEvent !== undefined) {
+    handler.open({email: $('#email').val()});
+    e.preventDefault();
+  }
+});
+
+$('.formcolorpicker').each(function() {
+  $(this).colorpicker({ useAlpha: false });
+});
 
 var handler = StripeCheckout.configure({
   key: stripeKey,
@@ -21,18 +39,16 @@ var handler = StripeCheckout.configure({
   }
 });
 
+lightbox.option({
+  'resizeDuration': 200,
+  'fadeDuration': 200,
+  'imageFadeDuration': 0,
+  'wrapAround': true,
+});
+
 $(document).on('click', '[data-toggle="lightbox"]', function(e) {
     e.preventDefault();
     $(this).ekkoLightbox();
-});
-
-$('#keyboard, #profile').change(showTemplate);
-$('#order-form').submit(function(e) {
-  // if triggered by human
-  if (e.originalEvent !== undefined) {
-    handler.open({email: $('#email').val()});
-    e.preventDefault();
-  }
 });
 
 showTemplate();

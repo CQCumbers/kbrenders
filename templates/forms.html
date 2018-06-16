@@ -1,0 +1,40 @@
+{% macro input_field(field) %}
+  <div class="form-group">
+    {{ field.label }}
+    {{ field(class="form-control"+(" is-invalid" if field.errors else ""), required=field.flags.required) }}
+    <span class="form-text">{{ field.description | safe }}</span>
+    {% for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro file_field(field) %}
+  <div class="form-group">
+    {{ field.label }}
+    <div class="custom-file">
+      {{ field(class="custom-file-input"+(" is-invalid" if field.errors else ""), required=field.flags.required) }}
+      <span class="custom-file-label">Choose file</span>
+    </div>
+    <span class="form-text">{{ field.description | safe }}</span>
+    {% for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro color_field(field) %}
+  <div class="form-group">
+    {{ field.label }}
+    <div class="input-group colorpicker-component formcolorpicker">
+      {{ field(class="form-control"+(" is-invalid" if field.errors else ""), required=field.flags.required) }}
+      <div class="input-group-append">
+        <span class="input-group-text input-group-addon"><i></i></span>
+      </div>
+    </div>
+    <span class="form-text">{{ field.description | safe }}</span>
+    {% for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
+{% endmacro %}

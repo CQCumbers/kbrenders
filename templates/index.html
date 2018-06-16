@@ -1,4 +1,6 @@
-<!DOCTYPE HTML>
+{% from "forms.html" import input_field, file_field, color_field %}
+
+<!DOCTYPE html>
 <html land="en">
   <head>
     <!-- Standard Meta -->
@@ -14,53 +16,53 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.0.0-beta.1/css/bootstrap-colorpicker.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
     <link rel="stylesheet" href="static/style.css">
   </head>
 
-  <body data-spy="scroll" data-target="#navbar">
-    <header>
-      <nav id="navbar" class="navbar navbar-dark navbar-expand-md bg-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand text-white" href="#">
-            <img class="mb-2" src="static/logo.svg" width=22 height=22>
-            <span class="h3">kbrenders</span>
-          </a>
-          <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse justify-content-end" id="navLinks">
-            <ul class="navbar-nav">
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="#order-anchor">Order Form</a>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="#faq">FAQ</a>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="#sample-renders">Sample Renders</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-
+  <body>
     <main>
-      <!-- Masthead -->
-      <div id="order-anchor" class="jumbotron jumbotron-fluid masthead">
-        <div class="container mt-5">
+      <div id="order-anchor" class="masthead">
+        <!-- Navbar -->
+        <nav id="navbar" class="navbar navbar-dark navbar-expand-md py-3">
+          <div class="container">
+            <a class="navbar-brand text-white" href="#">
+              <img class="mb-2" src="static/logo.svg" width=22 height=22>
+              <span class="h3">kbrenders</span>
+            </a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navLinks">
+              <ul class="navbar-nav">
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="#order-anchor">Order Form</a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="#faq">FAQ</a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="#sample-renders">Sample Renders</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="container py-3 py-md-5">
           <div class="row">
-            <div class="col-md">
-              <h1 class="jumbotron-heading text-white">Fast & Affordable<br/>3D Keycap Renders</h1>
+            <!-- Promo Text -->
+            <div class="col-md pr-md-4 pb-5">
+              <h1 class="display-4 text-white">Fast & Affordable<br/>Keyboard Renders</h1>
               <p class="lead text-light">
-                Select a keyboard layout and keycap profile, then modify the provided template to specify custom colors and legends. We'll email you a high resolution 3D render of your design within 2 hours.
+                Select a keyboard layout and keycap profile, then modify the provided template to specify custom colors and legends. We'll email you a high resolution 3D render of your design in 2 hours or less.
               </p>
               <a class="btn btn-lg btn-outline-light my-3" href="#sample-renders">View Samples</a>
             </div>
             
-            <div class="col-md-7">
+            <div class="col-md-7 pl-md-4 pb-5">
               <!-- Flashed messages -->
               {% for message in get_flashed_messages() %}
               <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -73,21 +75,20 @@
 
               <!-- Order Form -->
               <div class="card card-body bg-light">
-                <h2 class="card-title">Order a Render</h2>
+                <h2 class="card-title text-center">Order a Render</h2>
                 <form id="order-form" method="POST" enctype="multipart/form-data">
                   {{ form.csrf_token }}
-                  {% from "_formhelpers.html" import render_field %}
-                  {{ render_field(form.email) }}
+                  {{ input_field(form.email) }}
                   <div class="form-row">
-                    <div class="col-md-6">{{ render_field(form.keyboard) }}</div>
-                    <div class="col-md-6">{{ render_field(form.profile) }}</div>
+                    <div class="col-6">{{ input_field(form.keyboard) }}</div>
+                    <div class="col-6">{{ input_field(form.profile) }}</div>
                   </div>
-                  {{ render_field(form.kle) }}
+                  {{ file_field(form.kle) }}
                   <div class="form-row">
-                    <div class="col-md-6">{{ render_field(form.camera) }}</div>
-                    <div class="col-md-6">{{ render_field(form.background) }}</div>
+                    <div class="col-6">{{ input_field(form.camera) }}</div>
+                    <div class="col-6">{{ color_field(form.background) }}</div>
                   </div>
-                  <input class="btn btn-lg btn-primary btn-block" type="submit" value="Place Order ($10)">
+                  <input class="btn btn-lg btn-primary btn-block" type="submit" value="Place Order for $10">
                 </form>
               </div>
             </div>
@@ -95,14 +96,16 @@
         </div>
       </div>
 
-      <div class="container pb-5">
-        <h2 class="mb-3 scroll-anchor" id="faq">
+      <div class="container py-3 py-md-5">
+        <h2 class="scroll-anchor" id="faq">
           Frequently Asked Questions
         </h2>
-        {{ about_text }}
+        <div class="py-2">
+          {{ about_text }}
+        </div>
       </div>
 
-      <div class="bg-light py-4">
+      <div class="bg-light py-3 py-md-5">
         <div class="container">
           <h2 class="scroll-anchor" id="sample-renders">
             Sample Renders
@@ -126,23 +129,19 @@
       </div>
     </footer>
 
-    <!-- JQuery, Bootstrap, Lightbox & Stripe JS -->
+    <!-- JQuery, Popper, and Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Colorpicker, Lightbox and Stripe JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.0.0-beta.1/js/bootstrap-colorpicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
 
-    <script type="text/javascript">
+    <script>
       var stripeKey = '{{ stripeKey }}';
-      lightbox.option({
-        'resizeDuration': 200,
-        'fadeDuration': 200,
-        'imageFadeDuration': 0,
-        'wrapAround': true,
-      });
     </script>
     <script src="static/script.js"></script>
-
   </body>
 </html>

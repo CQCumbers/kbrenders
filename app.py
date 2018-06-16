@@ -1,5 +1,5 @@
 import os, json, glob, markdown, redis, stripe
-import flask_wtf, wtforms, wtforms_components, wtforms.validators
+import flask_wtf, wtforms, wtforms.validators
 from flask import Flask, render_template, redirect, flash, request, Markup
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -26,12 +26,8 @@ templates = {
 }
 for k, gists in templates.items(): gists.update({'DSA': gists['SA']})
 # Create upload help text from templates
-kle_text = '<span class="badge badge-warning">IMPORTANT</span> You <strong>MUST</strong> use this template: '
-template_text = '''
-<a id="{0}_{1}" class="template" target="_blank" href="http://keyboard-layout-editor.com/#/gists/{2}">
-  {1} on {0}
-</a>
-'''
+kle_text = '<span class="badge badge-warning">IMPORTANT</span> You <b>MUST</b> use this template: '
+template_text = '<a id="{0}_{1}" class="template" target="_blank" href="http://keyboard-layout-editor.com/#/gists/{2}">{1} on {0}</a>'
 kle_text += ' '.join(template_text.format(k, p, g) for k, gists in templates.items() for p, g in gists.items())
 
 
@@ -58,12 +54,11 @@ class OrderForm(flask_wtf.FlaskForm):
         FileRequired(), FileAllowed(['json'], 'Upload must be JSON')
     ], description=kle_text)
     camera = wtforms.SelectField('Camera Angle', choices=[(c, c+' View') for c in ['Side', 'Top', 'Front']])
-    background = wtforms_components.ColorField('Background Color', default='#ffffff')
+    background = wtforms.StringField('Background Color', default='#ffffff')
     stripeToken = wtforms.HiddenField('stripeToken')
 
 
 def add2queue(message):
-    message['background'] = message['background'].hex
     message['kle'] = json.load(message['kle'])
     message.pop('csrf_token', None)
     message.pop('stripeToken', None)

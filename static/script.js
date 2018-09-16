@@ -8,6 +8,11 @@ function showTemplate() {
   $('.template').addClass('d-none');
   var selected = $('#keyboard').val()+'_'+$('#profile').val();
   $('#'+selected).removeClass('d-none');
+  if ($('#keyboard').val() == 'Freeform') {
+    $('.template-warn').addClass('d-none');
+  } else {
+    $('.template-warn').removeClass('d-none');
+  }
 }
 
 $('#keyboard, #profile').change(showTemplate);

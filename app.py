@@ -47,7 +47,8 @@ class OrderForm(flask_wtf.FlaskForm):
         ('M65', 'M65-A (65%)'),
         ('Mech27', 'Mech27 (TKL)'),
         ('Espectro', 'Espectro (96%)'),
-        ('Triangle', 'Triangle (Full-size)')
+        ('Triangle', 'Triangle (Full-size)'),
+        ('Freeform', 'Free-form (No case)')
     ])
     profile = wtforms.SelectField('Keycap Profile', choices=[(p, p) for p in ['SA', 'DSA', 'GMK']])
     kle = FileField('Layout JSON', validators=[

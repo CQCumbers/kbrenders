@@ -9,10 +9,12 @@ with open('about.md', 'r') as about_file:
 images = [
     ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
     ('SA Lunchbar on Espectro, Front View', 'Espectro_Front'),
-    ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
     ('DSA Lunchbar on M65-A, Side View', 'M65_Side'),
+    ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
     ('GMK Carbon on Klippe, Front View', 'Klippe_Front'),
-    ('SA Lunchbar on Triangle, Top View', 'Triangle_Top')
+    ('SA Lunchbar on Triangle, Top View', 'Triangle_Top'),
+    ('SA Nantucket Selectric (Freeform), Top View', 'Freeform_Top'),
+    ('SA Space Cadet (Freeform), Front View', 'Freeform_Front')
 ]
 
 # Use same kle templates for SA and DSA profiles
@@ -48,7 +50,7 @@ class OrderForm(flask_wtf.FlaskForm):
         ('Mech27', 'Mech27 (TKL)'),
         ('Espectro', 'Espectro (96%)'),
         ('Triangle', 'Triangle (Full-size)'),
-        ('Freeform', 'Free-form (No case)')
+        ('Freeform', 'Freeform (No case)')
     ])
     profile = wtforms.SelectField('Keycap Profile', choices=[(p, p) for p in ['SA', 'DSA', 'GMK']])
     kle = FileField('Layout JSON', validators=[

@@ -44,13 +44,13 @@ class OrderForm(flask_wtf.FlaskForm):
         wtforms.validators.DataRequired(), wtforms.validators.Email(message='Valid email required')
     ])
     keyboard = wtforms.SelectField('Keyboard', choices=[
+        ('Freeform', 'Freeform (No case)'),
         ('MM2', 'Mech Mini 2 (40%)'),
         ('Klippe', 'Klippe (60%)'),
         ('M65', 'M65-A (65%)'),
         ('Mech27', 'Mech27 (TKL)'),
         ('Espectro', 'Espectro (96%)'),
-        ('Triangle', 'Triangle (Full-size)'),
-        ('Freeform', 'Freeform (No case)')
+        ('Triangle', 'Triangle (Full-size)')
     ])
     profile = wtforms.SelectField('Keycap Profile', choices=[(p, p) for p in ['SA', 'DSA', 'GMK']])
     kle = FileField('Layout JSON', validators=[

@@ -83,7 +83,7 @@ def index():
     if form.validate_on_submit() and charge_card(form.data['stripeToken']):
         add2queue(form.data)
     elif request.method == 'POST':
-        flash('There was in error in your order form. Your card was not charged.')
+        flash('There was an error in your order. Your card was not charged.')
 
     return render_template(
         'index.html', images=images, about_text=about_text,

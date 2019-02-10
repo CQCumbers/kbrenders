@@ -102,8 +102,7 @@ def charge_card(token):
 def index():
     form = OrderForm()
     if form.validate_on_submit() and charge_card(form.data['stripeToken']):
-        #add2queue(form.data)
-        print(form.data)
+        add2queue(form.data)
     elif request.method == 'POST':
         flash('There was an error in your order. Your card was not charged.')
 

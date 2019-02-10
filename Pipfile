@@ -9,6 +9,7 @@ stripe = "*"
 redis = "*"
 flask-wtf = "*"
 gunicorn = "*"
+pygithub = "*"
 
 [dev-packages]
 

@@ -1,7 +1,9 @@
-import os, json, glob, markdown, redis, stripe
-import flask_wtf, wtforms, wtforms.validators
+import os, json, github, glob, markdown, redis, stripe
+import flask_wtf, wtforms
 from flask import Flask, render_template, redirect, flash, request, Markup
+from wtforms.validators import DataRequired, Email, ValidationError
 from flask_wtf.file import FileField, FileAllowed, FileRequired
+from keyboard import deserialise
 
 with open('about.md', 'r') as about_file:
     about_text = Markup(markdown.markdown(about_file.read()))
@@ -27,21 +29,27 @@ templates = {
     'Triangle': {'SA': 'b86a688e6502fcc910d4b32ca2fa642e', 'GMK': '11f7fc1a19c7f2210f560a93c8ab82a2'}
 }
 for k, gists in templates.items(): gists.update({'DSA': gists['SA']})
+
 # Create upload help text from templates
 kle_text = '<span class="badge badge-warning">IMPORTANT</span> You <b>MUST</b> use this template: '
 template_text = '<a id="{0}_{1}" class="template" target="_blank" href="http://keyboard-layout-editor.com/#/gists/{2}">{1} on {0}</a>'
 kle_text += ' '.join(template_text.format(k, p, g) for k, gists in templates.items() for p, g in gists.items())
 
+# generate choices for upload fields
+profiles = [(p, p) for p in ['SA', 'DSA', 'GMK']]
+cameras = [(c, c+' View') for c in ['Side', 'Top', 'Front']]
+
 
 app = Flask(__name__)
 app.config.from_object('config')
+github_api = github.Github(app.config['GITHUB_API_TOKEN'])  
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 queue = redis.from_url(app.config['REDIS_URL'])
 
 
 class OrderForm(flask_wtf.FlaskForm):
     email = wtforms.StringField('Email Address', validators=[
-        wtforms.validators.DataRequired(), wtforms.validators.Email(message='Valid email required')
+        DataRequired(), Email(message='Valid email required')
     ])
     keyboard = wtforms.SelectField('Keyboard', choices=[
         ('Freeform', 'Freeform (No case)'),
@@ -52,13 +60,26 @@ class OrderForm(flask_wtf.FlaskForm):
         ('Espectro', 'Espectro (96%)'),
         ('Triangle', 'Triangle (Full-size)')
     ])
-    profile = wtforms.SelectField('Keycap Profile', choices=[(p, p) for p in ['SA', 'DSA', 'GMK']])
+    profile = wtforms.SelectField('Keycap Profile', choices=profiles)
     kle = FileField('Layout JSON', validators=[
         FileRequired(), FileAllowed(['json'], 'Upload must be JSON')
     ], description=kle_text)
-    camera = wtforms.SelectField('Camera Angle', choices=[(c, c+' View') for c in ['Side', 'Top', 'Front']])
+    camera = wtforms.SelectField('Camera Angle', choices=cameras)
     background = wtforms.StringField('Background Color', default='#ffffff')
     stripeToken = wtforms.HiddenField('stripeToken')
+    
+
+    def validate_kle(form, field):
+        if form.data['keyboard'] not in templates: return
+        gist = templates[form.data['keyboard']][form.data['profile']]
+        files = github_api.get_gist(gist).files
+        layout = next(v for k, v in files.items() if k.endswith('.kbd.json'))
+        
+        template = deserialise(json.loads(layout.content))
+        kle = deserialise(json.load(field.data))
+        field.data.seek(0)
+        if template != kle:
+            raise ValidationError('Layout JSON must exactly match provided template')
 
 
 def add2queue(message):
@@ -81,7 +102,8 @@ def charge_card(token):
 def index():
     form = OrderForm()
     if form.validate_on_submit() and charge_card(form.data['stripeToken']):
-        add2queue(form.data)
+        #add2queue(form.data)
+        print(form.data)
     elif request.method == 'POST':
         flash('There was an error in your order. Your card was not charged.')
 

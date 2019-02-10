@@ -16,10 +16,10 @@
       {{ field(class="custom-file-input"+(" is-invalid" if field.errors else ""), required=field.flags.required) }}
       <span class="custom-file-label">Choose file</span>
     </div>
-    <span class="form-text template-warn">{{ field.description | safe }}</span>
     {% for error in field.errors %}
-    <div class="invalid-feedback">{{ error }}</div>
+    <div class="invalid-feedback d-block">{{ error }}</div>
     {% endfor %}
+    <span class="form-text template-warn">{{ field.description | safe }}</span>
   </div>
 {% endmacro %}
 

@@ -1,6 +1,6 @@
-import os, json, github, glob, markdown, redis, stripe
-import flask_wtf, wtforms
+import os, json, hashlib, hmac, github, markdown, redis, requests, stripe
 from flask import Flask, render_template, redirect, flash, request, Markup
+import flask_wtf, wtforms
 from wtforms.validators import DataRequired, Email, ValidationError
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from keyboard import deserialise
@@ -10,8 +10,8 @@ with open('about.md', 'r') as about_file:
 
 images = [
     ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
-    ('SA Lunchbar on Espectro, Front View', 'Espectro_Front'),
-    ('DSA Lunchbar on M65-A, Side View', 'M65_Side'),
+    ('DSA Lunchbar on Espectro, Front View', 'Espectro_Front'),
+    ('SA Lunchbar on M65-A, Side View', 'M65_Side'),
     ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
     ('GMK Carbon on Klippe, Front View', 'Klippe_Front'),
     ('SA Lunchbar on Triangle, Top View', 'Triangle_Top'),
@@ -79,7 +79,7 @@ class OrderForm(flask_wtf.FlaskForm):
         kle = deserialise(json.load(field.data))
         field.data.seek(0)
         if template != kle:
-            raise ValidationError('Layout JSON must exactly match provided template')
+            raise ValidationError('Key layout must match provided template')
 
 
 def add2queue(message):
@@ -95,6 +95,28 @@ def charge_card(token):
         amount=1000, currency='usd', source=token,
         description='3D render of keycap set design'
     )
+
+
+def verify(sig):
+    token = '{0}{1}'.format(sig['timestamp'], sig['token'])
+    hmac_digest = hmac.new(
+        key=app.config['MAILGUN_KEY'].encode('utf-8'),
+        msg=token.encode('utf-8'), digestmod=hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(sig['signature'], hmac_digest)
+
+
+@app.route('/mailgun_hook', methods=['POST'])
+def mailgun_hook():
+    message = request.get_json()
+    if not verify(message['signature']):
+        return 'Improper verification request', 403
+    requests.post(
+        message['event-data']['storage']['url'],
+        auth=('api', app.config['MAILGUN_KEY']),
+        data={'to': app.config['ADMIN_EMAIL']}
+    )
+    return 'OK'
 
 
 @app.route('/', methods=['GET', 'POST'])

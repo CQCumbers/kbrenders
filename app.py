@@ -1,4 +1,4 @@
-import os, json, hashlib, hmac, github, markdown, redis, requests, stripe
+import os, json, hashlib, hmac, github, markdown, redis, requests, stripe, base64
 from flask import Flask, render_template, redirect, flash, request, Markup
 import flask_wtf, wtforms
 from wtforms.validators import DataRequired, Email, ValidationError
@@ -64,6 +64,7 @@ class OrderForm(flask_wtf.FlaskForm):
     kle = FileField('Layout JSON', validators=[
         FileRequired(), FileAllowed(['json'], 'Upload must be JSON')
     ], description=kle_text)
+    font = FileField('Custom Font', validators=[FileAllowed(['ttf'], 'Upload must be TTF')])
     camera = wtforms.SelectField('Camera Angle', choices=cameras)
     background = wtforms.StringField('Background Color', default='#ffffff')
     stripeToken = wtforms.HiddenField('stripeToken')
@@ -84,6 +85,8 @@ class OrderForm(flask_wtf.FlaskForm):
 
 def add2queue(message):
     message['kle'] = json.load(message['kle'])
+    font = message['font'].read()
+    message['font'] = base64.b64encode(font).decode('ascii')
     message.pop('csrf_token', None)
     message.pop('stripeToken', None)
     queue.lpush('orders', json.dumps(message))

@@ -19,7 +19,7 @@
     {% for error in field.errors %}
     <div class="invalid-feedback d-block">{{ error }}</div>
     {% endfor %}
-    <span class="form-text template-warn">{{ field.description | safe }}</span>
+    <span class="form-text template-warn d-none">{{ field.description | safe }}</span>
   </div>
 {% endmacro %}
 

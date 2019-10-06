@@ -7,6 +7,10 @@
     background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
 }
 
+.colorpicker {
+    touch-action: none;
+}
+
 input[type=color].form-control {
     height: calc(2.25rem + 2px);
     padding: 2px;

@@ -32,7 +32,7 @@ for k, gists in templates.items(): gists.update({'DSA': gists['SA']})
 
 # Create upload help text from templates
 kle_text = '<span class="badge badge-warning">IMPORTANT</span> You <b>MUST</b> use this template: '
-template_text = '<a id="{0}_{1}" class="template" target="_blank" href="http://keyboard-layout-editor.com/#/gists/{2}">{1} on {0}</a>'
+template_text = '<a id="{0}_{1}" class="template" target="_blank" rel="noreferrer" href="http://keyboard-layout-editor.com/#/gists/{2}">{1} on {0}</a>'
 kle_text += ' '.join(template_text.format(k, p, g) for k, gists in templates.items() for p, g in gists.items())
 
 # generate choices for upload fields

@@ -1,22 +1,26 @@
 {% from "forms.html" import input_field, file_field, color_field %}
 
 <!DOCTYPE html>
-<html land="en">
+<html lang="en">
   <head>
     <!-- Standard Meta -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <title>kbrenders</title>
+    <meta name="description" content="Fast & Affordable Keyboard Renders">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
     <link rel="shortcut icon" href="static/favicon.ico">
 
+    <link rel="preconnect" href="https://q.stripe.com/" crossorigin>
+    <link rel="preconnect" href="https://m.stripe.com/" crossorigin>
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.0.0-beta.1/css/bootstrap-colorpicker.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.0.0-beta.1/css/bootstrap-colorpicker.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
     <link rel="stylesheet" href="static/style.css">
   </head>
@@ -28,7 +32,7 @@
         <nav id="navbar" class="navbar navbar-dark navbar-expand-md py-3">
           <div class="container">
             <a class="navbar-brand text-white" href="#">
-              <img class="mb-2" src="static/logo.svg" width=22 height=22>
+              <img class="mb-2" src="static/logo.svg" alt="" width=22 height=22>
               <span class="h3">kbrenders</span>
             </a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks">
@@ -113,7 +117,7 @@
           <div class="row">
           {% for image in images %}
           <a class="col-md-6 p-1" href="{{ 'static/renders/'+image[1]+'.png' }}" data-lightbox="renders" data-title="{{ image[0] }}">
-            <img class="img-fluid" src="{{ 'static/renders/'+image[1]+'@sm.png' }}" srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 1920w' }}" alt="{{ image[1] }}">
+            <img class="img-fluid lazyload" data-src="{{ 'static/renders/'+image[1]+'@sm.png' }}" data-srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 1920w' }}" alt="{{ image[1] }}">
           </a>
           {% endfor %}
         </div>
@@ -136,6 +140,7 @@
 
     <!-- Colorpicker, Lightbox and Stripe JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.0.0-beta.1/js/bootstrap-colorpicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
 

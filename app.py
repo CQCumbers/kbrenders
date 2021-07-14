@@ -37,7 +37,8 @@ kle_text += ' '.join(template_text.format(k, p, g) for k, gists in templates.ite
 
 # generate choices for upload fields
 profiles = [(p, p) for p in ['SA', 'DSA', 'GMK']]
-cameras = [(c, c+' View') for c in ['Side', 'Top', 'Front']]
+cameras = [(c, c+' View') for c in ['Top', 'Front', 'Side']]
+materials = [(m, m) for m in ['Light Metal', 'Dark Metal', 'White Paint', 'Black Paint']]
 
 
 app = Flask(__name__)
@@ -65,7 +66,8 @@ class OrderForm(flask_wtf.FlaskForm):
         FileRequired(), FileAllowed(['json'], 'Upload must be JSON')
     ], description=kle_text)
     camera = wtforms.SelectField('Camera Angle', choices=cameras)
-    background = wtforms.StringField('Background Color', default='#ffffff')
+    material = wtforms.SelectField('Case Material', choices=materials)
+    background = wtforms.StringField('Background Color', default='#333333')
     stripeToken = wtforms.HiddenField('stripeToken')
     
 

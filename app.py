@@ -9,14 +9,14 @@ with open('about.md', 'r') as about_file:
     about_text = Markup(markdown.markdown(about_file.read()))
 
 images = [
-    ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
-    ('DSA Lunchbar on Espectro, Front View', 'Espectro_Front'),
     ('SA Lunchbar on M65-A, Side View', 'M65_Side'),
-    ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
     ('GMK Carbon on Klippe, Front View', 'Klippe_Front'),
+    ('DSA Lunchbar on Espectro, Front View', 'Espectro_Front'),
+    ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
     ('SA Lunchbar on Triangle, Top View', 'Triangle_Top'),
-    ('SA Nantucket Selectric (Freeform), Top View', 'Freeform_Top'),
-    ('SA Space Cadet (Freeform), Front View', 'Freeform_Front')
+    ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
+    ('SA Space Cadet (Freeform), Front View', 'Freeform_Front'),
+    ('GMK Carbon (Freeform), Front View', 'Freeform_Top')
 ]
 
 # Use same kle templates for SA and DSA profiles

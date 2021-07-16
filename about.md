@@ -8,7 +8,7 @@ If you're designing a mechanical keyboard keycap set, you'll need 3D renders of 
 2. If you want to render an existing keyboard-layout-editor design, choose Freeform (No case) in the "Keyboard" dropdown. Otherwise, choose the keyboard case you want to use.
 3. Choose the keycap profile you want to use. SA and DSA are treated as uniform, while GMK uses the standard sculpt for the keyboard you chose (If you chose Freeform, GMK is also treated as uniform).
 3. If you chose a specific keyboard case, modify the provided keyboard-layout-editor template. Don't add keys to the template or modify key positions, or you may get unexpected results. If you chose Freeform, go to your existing layout on keyboard-layout-editor.
-4. Download your JSON file from keyboard-layout-editor and select it in the "Layout JSON" field of the order form. If you're unsure what your legends will look like, you can use [kle-render](http://kle-render.herokuapp.com) to preview your layout in 2D.
+4. Download your JSON file from keyboard-layout-editor and select it in the "Layout JSON" field of the order form. If you're unsure what your legends will look like, you can use [kle-render](http://kle-render.herokuapp.com) to preview your layout in 2D. See the [kle-render FAQ](https://github.com/CQCumbers/kle_render#frequently-asked-questions) for details on using custom icons and fonts.
 5. Choose a camera angle and background color, then submit your order.
 6. Receive an email with your completed render attached in 2 hours or less.
 

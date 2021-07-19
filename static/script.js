@@ -33,7 +33,7 @@ var handler = StripeCheckout.configure({
   locale: 'auto',
   name: 'kbrenders',
   description: '3D render of keycap set design',
-  amount: 1000,
+  amount: 500,
   zipCode: true,
   token: function(t) {
     var token = $('<input />')

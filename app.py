@@ -16,7 +16,7 @@ images = [
     ('SA Lunchbar on Triangle, Top View', 'Triangle_Top'),
     ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
     ('SA Space Cadet (Freeform), Front View', 'Freeform_Front'),
-    ('GMK Carbon (Freeform), Front View', 'Freeform_Top')
+    ('GMK Carbon (Freeform), Top View', 'Freeform_Top')
 ]
 
 # Use same kle templates for SA and DSA profiles
@@ -94,7 +94,7 @@ def add2queue(message):
 
 def charge_card(token):
     return stripe.Charge.create(
-        amount=1000, currency='usd', source=token,
+        amount=500, currency='usd', source=token,
         description='3D render of keycap set design'
     )
 

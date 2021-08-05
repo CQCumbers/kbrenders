@@ -81,7 +81,6 @@
               <div class="card card-body bg-light">
                 <h2 class="card-title text-center">Order a Render</h2>
                 <form id="order-form" method="POST" enctype="multipart/form-data">
-                  {{ form.csrf_token }}
                   {{ input_field(form.email) }}
                   <div class="form-row">
                     <div class="col-6">{{ input_field(form.keyboard) }}</div>

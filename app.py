@@ -86,7 +86,6 @@ class OrderForm(flask_wtf.FlaskForm):
 
 def add2queue(message):
     message['kle'] = json.load(message['kle'])
-    message.pop('csrf_token', None)
     message.pop('stripeToken', None)
     queue.lpush('orders', json.dumps(message))
     flash('Your order has been queued.')
@@ -124,10 +123,11 @@ def mailgun_hook():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    form = OrderForm()
+    form = OrderForm(meta={'csrf': False})
     if form.validate_on_submit() and charge_card(form.data['stripeToken']):
         add2queue(form.data)
     elif request.method == 'POST':
+        print('Error: {0}'.format(form.errors))
         flash('There was an error in your order. Your card was not charged.')
 
     return render_template(

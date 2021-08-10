@@ -83,14 +83,15 @@
                 <form id="order-form" method="POST" enctype="multipart/form-data">
                   {{ input_field(form.email) }}
                   <div class="form-row">
-                    <div class="col-6">{{ input_field(form.keyboard) }}</div>
-                    <div class="col-6">{{ input_field(form.profile) }}</div>
+                    <div class="col-4">{{ input_field(form.keyboard) }}</div>
+                    <div class="col-4">{{ input_field(form.profile) }}</div>
+                    <div class="col-4">{{ input_field(form.camera) }}</div>
                   </div>
                   {{ file_field(form.kle) }}
                   <div class="form-row">
-                    <div class="col-4">{{ input_field(form.camera) }}</div>
                     <div class="col-4">{{ input_field(form.material) }}</div>
-                    <div class="col-4">{{ color_field(form.background) }}</div>
+                    <div class="col-4">{{ input_field(form.background) }}</div>
+                    <div class="col-4">{{ color_field(form.backcolor) }}</div>
                   </div>
                   <input class="btn btn-lg btn-primary btn-block" type="submit" value="Place Order ($5)">
                 </form>

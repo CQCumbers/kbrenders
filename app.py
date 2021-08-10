@@ -39,6 +39,8 @@ kle_text += ' '.join(template_text.format(k, p, g) for k, gists in templates.ite
 profiles = [(p, p) for p in ['SA', 'DSA', 'GMK']]
 cameras = [(c, c+' View') for c in ['Top', 'Front', 'Side']]
 materials = [(m, m) for m in ['Light Metal', 'Dark Metal', 'White Paint', 'Black Paint']]
+backgrounds = [(b, b) for b in ['Use Color', 'Transparent', 'Concrete',
+    'White Marble', 'Black Marble', 'Light Wood', 'Dark Wood']]
 
 
 app = Flask(__name__)
@@ -62,12 +64,13 @@ class OrderForm(flask_wtf.FlaskForm):
         ('Triangle', 'Triangle (Full-size)')
     ])
     profile = wtforms.SelectField('Keycap Profile', choices=profiles)
+    camera = wtforms.SelectField('Camera Angle', choices=cameras)
     kle = FileField('Layout JSON', validators=[
         FileRequired(), FileAllowed(['json'], 'Upload must be JSON')
     ], description=kle_text)
-    camera = wtforms.SelectField('Camera Angle', choices=cameras)
     material = wtforms.SelectField('Case Material', choices=materials)
-    background = wtforms.StringField('Background Color', default='#333333')
+    background = wtforms.SelectField('Background Material', choices=backgrounds)
+    backcolor = wtforms.StringField('Background Color', default='#333333')
     stripeToken = wtforms.HiddenField('stripeToken')
     
 
@@ -86,13 +89,18 @@ class OrderForm(flask_wtf.FlaskForm):
 
 def add2queue(message):
     message['kle'] = json.load(message['kle'])
+    if message['background'] == 'Use Color':
+        message['background'] = message['backcolor']
+    message.pop('backcolor', None)
+
     message.pop('stripeToken', None)
     queue.lpush('orders', json.dumps(message))
     flash('Your order has been queued.')
 
 
 def charge_card(token):
-    return stripe.Charge.create(
+    test_mode = stripe.api_key.startswith('sk_test')
+    return test_mode or stripe.Charge.create(
         amount=500, currency='usd', source=token,
         description='3D render of keycap set design'
     )

@@ -68,11 +68,11 @@ class OrderForm(flask_wtf.FlaskForm):
     kle = FileField('Layout JSON', validators=[
         FileRequired(), FileAllowed(['json'], 'Upload must be JSON')
     ], description=kle_text)
-    material = wtforms.SelectField('Case Material', choices=materials)
+    material = wtforms.SelectField('Case Material', choices=materials, default='Light Metal')
     background = wtforms.SelectField('Background Material', choices=backgrounds)
     backcolor = wtforms.StringField('Background Color', default='#333333')
     stripeToken = wtforms.HiddenField('stripeToken')
-    
+
 
     def validate_kle(form, field):
         if form.data['keyboard'] not in templates: return
@@ -89,6 +89,7 @@ class OrderForm(flask_wtf.FlaskForm):
 
 def add2queue(message):
     message['kle'] = json.load(message['kle'])
+    message.setdefault('material', 'Light Metal')
     if message['background'] == 'Use Color':
         message['background'] = message['backcolor']
     message.pop('backcolor', None)

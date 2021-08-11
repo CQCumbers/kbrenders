@@ -4,18 +4,25 @@ $('.custom-file-input').on('change', function() {
 });
 $('.custom-file-input').change();
 
+$('#background').on('change', function() {
+  var used = $('#background').val() == 'Use Color';
+  $('#backcolor').prop('disabled', !used);
+});
+
 function showTemplate() {
   $('.template').addClass('d-none');
   var selected = $('#keyboard').val()+'_'+$('#profile').val();
   $('#'+selected).removeClass('d-none');
   if ($('#keyboard').val() == 'Freeform') {
     $('.template-warn').addClass('d-none');
+    $('#material').prop('disabled', true);
   } else {
     $('.template-warn').removeClass('d-none');
+    $('#material').prop('disabled', false);
   }
 }
 
-$('#keyboard, #profile').change(showTemplate);
+$('#keyboard, #profile').on('change', showTemplate);
 $('#order-form').submit(function(e) {
   // if triggered by human
   if (e.originalEvent !== undefined) {

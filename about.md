@@ -18,4 +18,4 @@ If you're having problems with a specific layout, email us at mail@kbrenders.com
 
 For general bug reports, questions, and feature requests, message [/u/CQ\_Cumbers](http://reddit.com/u/CQ_Cumbers) on reddit or CQ\_Cumbers on geekhack. Service outages, changelogs, and other information will be posted on the [geekhack thead](https://geekhack.org/index.php?topic=92666.0). 
 
-*Many thanks to RAMA, Mech27, Simen, and Mechkeys.ca for their keyboard models.*
+*Many thanks to RAMA, Mech27, Simen, Mechkeys.ca, pk-elmo, overset, Proto[Typist], and CableCarDesigns for their keyboard models.*

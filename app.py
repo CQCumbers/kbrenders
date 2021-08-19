@@ -9,12 +9,16 @@ with open('about.md', 'r') as about_file:
     about_text = Markup(markdown.markdown(about_file.read()))
 
 images = [
+    ('SA Lunchbar on Cipher, Front View', 'Cypher_Front'),
+    ('GMK Carbon on J02, Side View', 'J02_Side'),
+    ('SA Lunchbar on GMMK_Pro, Side View', 'GMMK_Pro_Side'),
+    ('GMK Carbon on JP01, Top View', 'JP01_Top'),
     ('SA Lunchbar on M65-A, Side View', 'M65_Side'),
     ('GMK Carbon on Klippe, Front View', 'Klippe_Front'),
-    ('DSA Lunchbar on Espectro, Front View', 'Espectro_Front'),
+    ('SA Lunchbar on Espectro, Front View', 'Espectro_Front'),
     ('GMK Carbon on Mech Mini 2, Top View', 'MM2_Top'),
     ('SA Lunchbar on Triangle, Top View', 'Triangle_Top'),
-    ('GMK Carbon on Mech27, Side View', 'Mech27_Side'),
+    ('GMK Carbon on Mech27, Top View', 'Mech27_Side'),
     ('SA Space Cadet (Freeform), Front View', 'Freeform_Front'),
     ('GMK Carbon (Freeform), Top View', 'Freeform_Top')
 ]
@@ -23,9 +27,13 @@ images = [
 templates = {
     'MM2': {'SA': 'ea2a231112ffceae047494ac9a93e706', 'GMK': 'eed1f1854dda3999bcdd730f0143c627'},
     'Klippe': {'SA': 'f8369e8d6ae12c6d30bbf6db9731bca5', 'GMK': 'c2aedbf20e6a1ee5320a0f89b114d6da'},
+    'J02': {'SA': '1e01f5c46bcc3ba388f84d3a26f2e2eb', 'GMK': 'd5ef16b69b4ea15569d7a319bbf90a8e'},
     'M65': {'SA': '3ca3649e1d048134ddd0e835d1dd735b', 'GMK': '4319599274157d2a0dd0e38328b76878'},
+    'GMMK_Pro': {'SA': 'c1a1d76bfcd236bc36e1c04c1e86a0d8', 'GMK': '8ab0de3dd5dc804ecb052924a1c45be5'},
+    'JP01': {'SA': '4f06c7adcce33046a463084af34aae60', 'GMK': 'de533ff9b29225bb65a6155151030673'},
     'Mech27': {'SA': '10629d008a99d8d6eb6f8c59414b5dd8', 'GMK': '6e6692825b348f40c040ca9750e469a8'},
     'Espectro': {'SA': '6b996bea3ebf8a85866ddea606e25de4', 'GMK': '6b996bea3ebf8a85866ddea606e25de4'},
+    'Cypher': {'SA': '9b5535a779ae9f095da3b8a73a39a3cf', 'GMK': '27bc8c126110952cc77c69ef972a7d0d'},
     'Triangle': {'SA': 'b86a688e6502fcc910d4b32ca2fa642e', 'GMK': '11f7fc1a19c7f2210f560a93c8ab82a2'}
 }
 for k, gists in templates.items(): gists.update({'DSA': gists['SA']})
@@ -58,9 +66,13 @@ class OrderForm(flask_wtf.FlaskForm):
         ('Freeform', 'Freeform (No case)'),
         ('MM2', 'Mech Mini 2 (40%)'),
         ('Klippe', 'Klippe (60%)'),
+        ('J02', 'J-02 (HHKB)'),
         ('M65', 'M65-A (65%)'),
+        ('GMMK_Pro', 'GMMK Pro (75%)'),
+        ('JP01', 'JP01 (Arisu)'),
         ('Mech27', 'Mech27 (TKL)'),
         ('Espectro', 'Espectro (96%)'),
+        ('Cypher', 'Cypher (1800-like)'),
         ('Triangle', 'Triangle (Full-size)')
     ])
     profile = wtforms.SelectField('Keycap Profile', choices=profiles)

@@ -118,7 +118,7 @@
           <div class="row">
           {% for image in images %}
           <a class="col-md-6 p-1" href="{{ 'static/renders/'+image[1]+'.png' }}" data-lightbox="renders" data-title="{{ image[0] }}">
-            <img class="img-fluid lazyload" data-src="{{ 'static/renders/'+image[1]+'@sm.png' }}" data-srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 1920w' }}" alt="{{ image[1] }}">
+            <img class="img-fluid w-100 lazyload" src="{{ 'static/renders/'+image[1]+'@sm.png' }}" data-srcset="{{ 'static/renders/'+image[1]+'@md.png 1024w, static/renders/'+image[1]+'.png 2560w' }}" alt="{{ image[1] }}">
           </a>
           {% endfor %}
         </div>

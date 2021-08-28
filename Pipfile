@@ -12,6 +12,7 @@ gunicorn = "*"
 pygithub = "*"
 requests = "*"
 email-validator = "*"
+python-digitalocean = "*"
 
 [dev-packages]
 

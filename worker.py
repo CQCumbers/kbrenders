@@ -12,7 +12,8 @@ apt-get install -y \
     libglu1-mesa \
     libxi6 \
     libxrender1 \
-    python3.9 && \
+    python3.9 \
+    python3.9-distutils && \
 apt-get -y autoremove && \
 rm -rf /var/lib/apt/lists/*
 

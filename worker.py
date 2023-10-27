@@ -40,7 +40,7 @@ cd app && python3.9 process_queue.py
 
 droplet = digitalocean.Droplet(name='KBRenders',
                                region='nyc1',
-                               image='ubuntu-20-04-x64',
+                               image='ubuntu-22-04-x64',
                                user_data=script,
                                size_slug='c2-16vcpu-32gb')
 queue = redis.from_url(os.environ.get('REDIS_URL'))
